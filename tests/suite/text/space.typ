@@ -40,6 +40,16 @@ Left #text(font: "IBM Plex Serif")[Right].
 // Test that linebreak consumed surrounding spaces.
 #align(center)[A \ B \ C]
 
+--- preserve-single-newlines paged ---
+// Single newlines become line breaks while blank lines remain paragraph breaks.
+#set text(preserve_newline: true)
+First line
+Second line
+
+Third line
+
+Fourth line
+
 --- space-collapsing-stringy-linebreak paged ---
 // Test that space at start of non-backslash-linebreak line isn't trimmed.
 A#"\n" B

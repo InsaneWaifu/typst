@@ -101,6 +101,19 @@ pub(crate) fn collapse_spaces(buf: &mut Vec<Pair>, start: usize) {
 
     // Delete all the excess that's left due to the gaps produced by spaces.
     buf.truncate(cursor);
+
+    // Preserve newlines only after whitespace has been collapsed, so this
+    // doesn't interfere with the normal handling of adjacent spaces.
+    for pair in &mut buf[start..] {
+        let (content, styles) = *pair;
+        if content
+            .to_packed::<SpaceElem>()
+            .is_some_and(|elem| elem.had_newline)
+            && styles.get(TextElem::preserve_newline)
+        {
+            *pair = (LinebreakElem::shared(), styles);
+        }
+    }
 }
 
 /// How to transition state for the space collapsing algorithm.

@@ -564,6 +564,25 @@ pub struct TextElem {
     #[ghost]
     pub hyphenate: Smart<bool>,
 
+    /// Whether to preserve single newlines as line breaks instead of
+    /// converting them to spaces.
+    ///
+    /// By default, Typst collapses single newlines in markup into spaces.
+    /// When this option is enabled, a single newline is instead rendered as a
+    /// line break. Multiple consecutive newlines still produce a paragraph
+    /// break, as usual.
+    ///
+    /// ```example
+    /// #set text(preserve_newline: true)
+    /// This is the first line.
+    /// This is the second line.
+    ///
+    /// This is a new paragraph.
+    /// ```
+    #[default(false)]
+    #[ghost]
+    pub preserve_newline: bool,
+
     /// The "cost" of various choices when laying out text. A higher cost means
     /// the layout engine will make the choice less often. Costs are specified
     /// as a ratio of the default cost, so `{50%}` will make text layout twice
