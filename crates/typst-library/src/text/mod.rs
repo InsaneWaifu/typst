@@ -579,6 +579,10 @@ pub struct TextElem {
     ///
     /// This is a new paragraph.
     /// ```
+    #[parse({
+        let underscore = args.named("preserve_newline")?;
+        underscore.or(args.named("preserve-newline")?)
+    })]
     #[default(false)]
     #[ghost]
     pub preserve_newline: bool,
